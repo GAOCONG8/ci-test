@@ -24,3 +24,16 @@ jobs:
 
     - name: Test
       run: ./build/hello_world 
+
+    - name: Package Binary
+      run: |
+        mkdir -p release
+        cp ./build/hello_world release/
+        echo "Built on Ubuntu 24.04 via GitHub Actions" > release/README.txt
+        tar -czf hello-world-ubuntu24.tar.gz -C release .
+
+    - name: Upload Packaged Binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: hello-world-ubuntu24
+        path: hello-world-ubuntu24.tar.gz
